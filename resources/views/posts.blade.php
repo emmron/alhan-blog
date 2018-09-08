@@ -8,7 +8,7 @@
         <title>Blog</title>
     </head>
     <body>
-        <h1>Home</h1>
+        <h1>All Posts</h1>
         <ul>
         @foreach ($posts as $post)
             <li>{{ $post->title }}</li>
