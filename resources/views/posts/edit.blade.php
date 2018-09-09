@@ -21,5 +21,6 @@
             <br>
             {!! Form::submit('Save Post'); !!}
         {!! Form::close() !!}
+        <a href="/posts/{{ $post->id }}/destroy">Delete Post</a>
     </body>
 </html>

@@ -17,3 +17,7 @@ Route::get('posts/{post}/edit', 'PostController@edit')
 Route::post('posts/{post}/edit', 'PostController@update')
     ->where('post', '[0-9]+')
     ->middleware('auth');
+
+Route::get('posts/{post}/destroy', 'PostController@destroy')
+    ->where('post', '[0-9]+')
+    ->middleware('auth');

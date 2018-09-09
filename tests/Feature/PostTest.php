@@ -107,5 +107,22 @@ class PostTest extends TestCase
         $response = $this->get('posts/' . $post->id);
         $response->assertSee($post->title . ' this is a test');
     }
+
+    /**
+     * I can delete a post and no longer see the post
+     *
+     * @return void
+     */
+    public function testDestroyPost()
+    {
+        $post = factory(\App\Post::class)->create();
+        $user = factory(\App\User::class)->create();
+        $response = $this->get('posts/' . $post->id);
+        $response->assertOk();
+        $response = $this->actingAs($user)
+            ->get('posts/' . $post->id .'/destroy');
+        $response = $this->get('posts/' . $post->id);
+        $response->assertNotFound();
+    }
 }
 
