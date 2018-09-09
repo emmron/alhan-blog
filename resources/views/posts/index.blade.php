@@ -10,6 +10,10 @@
     <body>
         <a href="/">Home</a>
         <h1>All Posts</h1>
+        @if (Auth::check())
+            <a href="/posts">Published</a>
+            <a href="/posts/drafts">Drafts</a>
+        @endif
         <ul>
         @foreach ($posts as $post)
             <li><a href="/p/{{ $post->slug }}">{{ $post->title }}</a></li>

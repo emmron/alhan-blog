@@ -7,6 +7,8 @@ Route::get('/', 'HomeController@index');
 Route::get('posts', 'PostController@index');
 Route::get('p/{slug}', 'PostController@show');
 
+
+Route::get('posts/drafts', 'PostController@drafts')->middleware('auth');
 Route::get('posts/create', 'PostController@create')->middleware('auth');
 Route::post('posts/create', 'PostController@store')->middleware('auth');
 
