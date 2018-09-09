@@ -9,10 +9,17 @@
     </head>
     <body>
         <a href="/">Home</a>
-        @if (Auth::check())
-        <a href="/posts/{{ $post->id }}/edit">Edit</a>
-        @endif
-        <h1>{{ $post->title }}</h1>
-        <p>{{ $post->body }}</p>
+        <h1>Edit Post</h1>
+        {!! Form::open() !!}
+            {!! Form::label('title', 'Post Title'); !!}
+            <br>
+            {!! Form::text('title', $post->title ); !!}
+            <br>
+            {!! Form::label('body', 'Post Body'); !!}
+            <br>
+            {!! Form::textarea('body', $post->body); !!}
+            <br>
+            {!! Form::submit('Save Post'); !!}
+        {!! Form::close() !!}
     </body>
 </html>

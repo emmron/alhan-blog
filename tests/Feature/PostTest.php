@@ -87,5 +87,25 @@ class PostTest extends TestCase
                 ]);
         $response->assertRedirect();
     }
+
+    /**
+     * I can edit a post and see my change
+     *
+     * @return void
+     */
+    public function testEditPost()
+    {
+        $post = factory(\App\Post::class)->create();
+        $user = factory(\App\User::class)->create();
+        $response = $this->actingAs($user)
+            ->get('posts/' . $post->id .'/edit');
+        $response = $this->post('posts/' . $post->id .'/edit', [
+                'title' => $post->title . ' this is a test', 
+                'body' => $post->body, 
+                '_token' => csrf_token()
+                ]);
+        $response = $this->get('posts/' . $post->id);
+        $response->assertSee($post->title . ' this is a test');
+    }
 }
 

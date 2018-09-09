@@ -62,7 +62,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -72,9 +72,15 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePostRequest $request, Post $post)
     {
-        //
+        $data = $request->only('title', 'body');
+        $post = Post::find($post->id);
+        $post->update([
+            'title' => $data['title'],
+            'body' => $data['body'],
+        ]);
+        return redirect()->action('PostController@show', ['post' => $post->id]);
     }
 
     /**
