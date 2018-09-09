@@ -3,8 +3,10 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Post::class, function (Faker $faker) {
+    $title = $faker->sentence();
     return [
-        'title' => $faker->sentence(),
+        'slug' => str_slug($title, '-'),
+        'title' => $title,
         'body' => $faker->text($maxNbChars = 10000)
     ];
 });

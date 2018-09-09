@@ -39,8 +39,9 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $data = $request->only('title', 'body');
+        $data['slug'] = str_slug($data['title'], '-');
         $post = Post::create($data);
-        return redirect()->action('PostController@show', ['post' => $post->id]);
+        return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
     /**
@@ -49,8 +50,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
+        $post = Post::where('slug', $slug)->firstOrFail();
         return view('posts.show', compact('post'));
     }
 
@@ -79,7 +81,7 @@ class PostController extends Controller
             'title' => $data['title'],
             'body' => $data['body'],
         ]);
-        return redirect()->action('PostController@show', ['post' => $post->id]);
+        return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
     /**
