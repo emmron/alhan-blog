@@ -13,7 +13,7 @@ class PostTest extends TestCase
      *
      * @return void
      */
-    public function testSeeLatestPost()
+    public function testSeeLatestPostOnHomePage()
     {
         $post = factory(\App\Post::class)->create();
         $response = $this->get('/');
@@ -31,5 +31,17 @@ class PostTest extends TestCase
         $response = $this->get('/posts');
         $response->assertSee($posts->first()->title);
         $response->assertSee($posts->last()->title);
+    }
+
+    /**
+     * I should be able to see the post when I visit the post
+     *
+     * @return void
+     */
+    public function testSeeIndividualPost()
+    {
+        $post = factory(\App\Post::class)->create();
+        $response = $this->get('posts/' . $post->id);
+        $response->assertSee($post->title);
     }
 }
