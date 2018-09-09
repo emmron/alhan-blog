@@ -8,7 +8,7 @@
         <title>Blog</title>
     </head>
     <body>
-        <h1>Home</h1>
+        <h1>Blog Home (Demo)</h1>
         <ul>
         @foreach ($posts as $post)
             <li><a href="posts/{{ $post->id }}">{{ $post->title }}</a></li>
