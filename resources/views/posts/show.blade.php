@@ -13,6 +13,6 @@
         <a href="/posts/{{ $post->id }}/edit">Edit</a>
         @endif
         <h1>{{ $post->title }}</h1>
-        <p>{{ $post->body }}</p>
+        <p>{!! $post->body !!}</p>
     </body>
 </html>
