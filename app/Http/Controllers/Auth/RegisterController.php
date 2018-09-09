@@ -63,7 +63,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (app()->env == 'local' || app()->env == 'development')
+        if (app()->env == 'local' || app()->env == 'develop')
         {
             return User::create([
                 'name' => $data['name'],
