@@ -41,7 +41,7 @@ class PostTest extends TestCase
     public function testSeeIndividualPost()
     {
         $post = factory(\App\Post::class)->create();
-        $response = $this->get('posts/' . $post->id);
+        $response = $this->get('p/' . $post->slug);
         $response->assertSee($post->title);
     }
 
@@ -104,7 +104,7 @@ class PostTest extends TestCase
                 'body' => $post->body, 
                 '_token' => csrf_token()
                 ]);
-        $response = $this->get('posts/' . $post->id);
+        $response = $this->get('p/' . $post->slug);
         $response->assertSee($post->title . ' this is a test');
     }
 
@@ -117,11 +117,11 @@ class PostTest extends TestCase
     {
         $post = factory(\App\Post::class)->create();
         $user = factory(\App\User::class)->create();
-        $response = $this->get('posts/' . $post->id);
+        $response = $this->get('p/' . $post->slug);
         $response->assertOk();
         $response = $this->actingAs($user)
             ->get('posts/' . $post->id .'/destroy');
-        $response = $this->get('posts/' . $post->id);
+        $response = $this->get('p/' . $post->slug);
         $response->assertNotFound();
     }
 }
