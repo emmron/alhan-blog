@@ -75,7 +75,6 @@ class PostController extends Controller
     public function update(StorePostRequest $request, Post $post)
     {
         $data = $request->only('title', 'body');
-        $post = Post::find($post->id);
         $post->update([
             'title' => $data['title'],
             'body' => $data['body'],
@@ -91,6 +90,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->action('PostController@index');
     }
 }
