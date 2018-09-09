@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\StorePost as StorePostRequest;
+
 class PostController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all()->sortByDesc('updated_at');
-        return view('posts', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,9 +36,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $data = $request->only('title', 'body');
+        $post = Post::create($data);
+        return redirect()->action('PostController@show', ['post' => $post->id]);
     }
 
     /**
@@ -47,7 +51,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
