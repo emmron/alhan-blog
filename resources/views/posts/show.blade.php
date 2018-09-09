@@ -8,12 +8,8 @@
         <title>Blog</title>
     </head>
     <body>
-        <h1>All Posts</h1>
-        <ul>
-        @foreach ($posts as $post)
-            <li>{{ $post->title }}</li>
-        @endforeach
-        </ul>
-        <a href="/posts">See All Posts</a>
+        <a href="/">Home</a>
+        <h1>{{ $post->title }}</h1>
+        <p>{{ $post->body }}</p>
     </body>
 </html>

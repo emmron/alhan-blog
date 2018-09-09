@@ -8,12 +8,12 @@
         <title>Blog</title>
     </head>
     <body>
-        <h1>Home</h1>
+        <a href="/">Home</a>
+        <h1>All Posts</h1>
         <ul>
         @foreach ($posts as $post)
             <li><a href="posts/{{ $post->id }}">{{ $post->title }}</a></li>
         @endforeach
         </ul>
-        <a href="posts">See All Posts</a>
     </body>
 </html>
