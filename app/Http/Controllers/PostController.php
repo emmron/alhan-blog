@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePost as StorePostRequest;
 
 class PostController extends Controller
@@ -16,7 +17,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->sortByDesc('updated_at');
+        $posts = Post::where('published', 1)->get()->sortByDesc('updated_at');
+        return view('posts.index', compact('posts'));
+    }
+
+    /**
+     * Display a listing of the resource in draft state.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function drafts()
+    {
+        $posts = Post::where('published', 0)->get()->sortByDesc('updated_at');
         return view('posts.index', compact('posts'));
     }
 
@@ -38,7 +50,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $data = $request->only('title', 'body');
+        $data = $request->only('title', 'body', 'published');
         $data['slug'] = str_slug($data['title'], '-');
         $post = Post::create($data);
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
@@ -53,6 +65,9 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
+        if (! Auth::check() && ! $post->published) {
+            abort(404);
+        }
         return view('posts.show', compact('post'));
     }
 
@@ -76,11 +91,8 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post)
     {
-        $data = $request->only('title', 'body');
-        $post->update([
-            'title' => $data['title'],
-            'body' => $data['body'],
-        ]);
+        $data = $request->only('title', 'body', 'published');
+        $post->update($data);
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 

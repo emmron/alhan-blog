@@ -16,6 +16,7 @@ class PostTest extends TestCase
     public function testSeeLatestPostOnHomePage()
     {
         $post = factory(\App\Post::class)->create();
+        $post->update(['published' => 1]);
         $response = $this->get('/');
         $response->assertSee($post->title);
     }
@@ -28,6 +29,8 @@ class PostTest extends TestCase
     public function testSeeAllPosts()
     {
         $posts = \App\Post::all();
+        $posts->first()->update(['published' => 1]);
+        $posts->last()->update(['published' => 1]);
         $response = $this->get('/posts');
         $response->assertSee($posts->first()->title);
         $response->assertSee($posts->last()->title);
@@ -41,6 +44,7 @@ class PostTest extends TestCase
     public function testSeeIndividualPost()
     {
         $post = factory(\App\Post::class)->create();
+        $post->update(['published' => 1]);
         $response = $this->get('p/' . $post->slug);
         $response->assertSee($post->title);
     }
@@ -70,11 +74,11 @@ class PostTest extends TestCase
     }
 
     /**
-     * I can create a post
+     * I can publish a post and see it as a guest
      *
      * @return void
      */
-    public function testCreatePost()
+    public function testCreatePublishedPost()
     {
         $user = factory(\App\User::class)->create();
         $postTitle = $user->name . '\'s first post';
@@ -83,9 +87,35 @@ class PostTest extends TestCase
         $response = $this->post('posts/create', [
                 'title' => $postTitle, 
                 'body' => 'test post body', 
+                'published' => true,
                 '_token' => csrf_token()
                 ]);
         $response->assertRedirect();
+        $response = $this->get('p/' . str_slug($postTitle,'-'));
+        $response->assertOk();
+    }
+
+    /**
+     * I can save a draft post and only see it when logged in
+     *
+     * @return void
+     */
+    public function testCreateDraftPost()
+    {
+        $user = factory(\App\User::class)->create();
+        $postTitle = $user->name . '\'s first post';
+        $response = $this->actingAs($user)
+            ->get('posts/create');
+        $response = $this->post('posts/create', [
+                'title' => $postTitle, 
+                'body' => 'test post body', 
+                'published' => false,
+                '_token' => csrf_token()
+                ]);
+        $response->assertRedirect();
+        \Auth::logout();
+        $response = $this->get('p/' . str_slug($postTitle,'-'));
+        $response->assertNotFound();
     }
 
     /**
@@ -102,10 +132,24 @@ class PostTest extends TestCase
         $response = $this->post('posts/' . $post->id .'/edit', [
                 'title' => $post->title . ' this is a test', 
                 'body' => $post->body, 
+                'published' => $post->published, 
                 '_token' => csrf_token()
                 ]);
         $response = $this->get('p/' . $post->slug);
         $response->assertSee($post->title . ' this is a test');
+    }
+
+    /**
+     * As a guest, I cannot see draft posts
+     *
+     * @return void
+     */
+    public function testGuestDraftGating()
+    {
+        $post = factory(\App\Post::class)->create();
+        $post->update(['published' => 0]);
+        $response = $this->get('p/' . $post->slug);
+        $response->assertNotFound();
     }
 
     /**
@@ -117,6 +161,7 @@ class PostTest extends TestCase
     {
         $post = factory(\App\Post::class)->create();
         $user = factory(\App\User::class)->create();
+        $post->update(['published' => 1]);
         $response = $this->get('p/' . $post->slug);
         $response->assertOk();
         $response = $this->actingAs($user)

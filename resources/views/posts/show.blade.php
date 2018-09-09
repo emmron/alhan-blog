@@ -11,6 +11,9 @@
         <a href="/">Home</a>
         @if (Auth::check())
         <a href="/posts/{{ $post->id }}/edit">Edit</a>
+            @if (! $post->published)
+            <p>DRAFT</p>
+            @endif
         @endif
         <h1>{{ $post->title }}</h1>
         <p>{!! $post->body !!}</p>
