@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3900f2e69b8e4eb7f28eecccc6878e0e",
+    "content-hash": "05f5afba9ab57330ffcae3a2a3d24979",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -806,6 +806,56 @@
                 "storage"
             ],
             "time": "2018-08-22T07:45:22+00:00"
+        },
+        {
+            "name": "matthewbdaly/laravel-etag-middleware",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthewbdaly/laravel-etag-middleware.git",
+                "reference": "a5f1956c3c771eb6d22ea479e44c45f122d18e5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthewbdaly/laravel-etag-middleware/zipball/a5f1956c3c771eb6d22ea479e44c45f122d18e5c",
+                "reference": "a5f1956c3c771eb6d22ea479e44c45f122d18e5c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "5.1.x|5.2.x|5.3.x|5.4.x|5.5.x|5.6.x",
+                "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x|5.5.x|5.6.x"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^4.8|^5.2",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Matthewbdaly\\ETagMiddleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Daly",
+                    "email": "450801+matthewbdaly@users.noreply.github.com"
+                }
+            ],
+            "description": "A Laravel middleware for adding ETags to HTTP requests to improve response times",
+            "keywords": [
+                "ETags",
+                "Etag",
+                "http",
+                "laravel",
+                "middleware"
+            ],
+            "time": "2018-09-01T06:27:49+00:00"
         },
         {
             "name": "monolog/monolog",
