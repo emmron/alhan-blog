@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePost as StorePostRequest;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -68,6 +69,9 @@ class PostController extends Controller
         if (! Auth::check() && ! $post->published) {
             abort(404);
         }
+        $carbon = Carbon::now();
+        $date = $carbon->parse($post->updated_at);
+        $post->date = $date;
         return view('posts.show', compact('post'));
     }
 
