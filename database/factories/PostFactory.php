@@ -8,6 +8,6 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'slug' => str_slug($title, '-'),
         'title' => $title,
         'body' => $faker->text($maxNbChars = 10000),
-        'published' => $faker->boolean($chanceOfGettingTrue = 20),
+        'published' => $faker->boolean($chanceOfGettingTrue = 90),
     ];
 });
