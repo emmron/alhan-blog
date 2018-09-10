@@ -1,20 +1,45 @@
 
-// Body
-$body-bg: #f8fafc;
+// Sizing & Spacing
+$space-1: 4px;
+$space-2: $space-1 * 2; //8
+$space-3: $space-1 * 4; //16
+$space-4: $space-3 * 2; //32
+$space-5: $space-3 * 3; //48
+$space-6: $space-2 * 9; //72
+$space-7: $space-4 * 3; //96
+$space-8: $space-2 * 15; //120
+
+$max-container-width: 800px;
 
 // Typography
-$font-family-sans-serif: "Nunito", sans-serif;
-$font-size-base: 0.9rem;
+$font-family-headline: "Lora","Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+$font-family-body: "Helvetica Neue", "Calibri", "Helvetica", "Arial", sans-serif;
+$font-size-base: 1.4rem;
+$font-size-headline: $font-size-base * 2.4;
 $line-height-base: 1.6;
+$line-height-headline: $line-height-base * .8;
 
 // Colors
+$body-bg: #fafafa ;
+$font-color: #555555;
+$container-bg: #ffffff;
+$container-border: 1px solid #f1f1f1;
+$pink: #f66D9b;
+$pink-transparent: rgba(246, 109, 155, 0.5);
+
+
 $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
-$pink: #f66D9b;
 $red: #e3342f;
 $orange: #f6993f;
 $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+// Timing
+$transition-time-1: .2s;
+$transition-time-2: .4s;
+$transition-time-3: .8s;
+$transition-time-4: 1s;
