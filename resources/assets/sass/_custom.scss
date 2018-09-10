@@ -62,6 +62,7 @@ h1 {
     border: $container-border;
 }
 
+
 // .slide-up-container {
 //     animation-name: slideUpContainer;
 // 	animation-iteration-count: 1;
@@ -100,5 +101,23 @@ h1 {
 @media all and (max-width: 768px) {
     .post-container {
         padding: $space-4;
+        margin: $space-2 auto;
+    }
+    .logo {
+        font-size: $font-size-base;
+    }
+    h1 {
+        font-size: $font-size-headline *.5;
+        margin-bottom: $space-2;
+    }
+    p {
+        font-size: $font-size-base * .8;
+    }
+}
+
+@media all and (max-width: 376px) {
+    .post-container {
+        padding-left: $space-3;
+        padding-right: $space-3;
     }
 }
