@@ -78,7 +78,7 @@ class PostController extends Controller
         $post->date = $date;
 
         // Inline CSS
-        $css = Storage::get('/css/app.css');
+        $css = Storage::get('/public/css/app.css');
 
         return view('posts.show', compact('post', 'css'));
     }
