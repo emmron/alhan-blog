@@ -15,4 +15,4 @@ mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 // .js('resources/assets/js/app.js', 'public/js')
 
-mix.copyDirectory('public/css', '/storage/app/public/css');
+mix.copyDirectory('public/css', 'storage/app/public/css');
