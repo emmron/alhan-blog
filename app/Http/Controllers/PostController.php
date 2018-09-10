@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePost as StorePostRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -65,14 +66,21 @@ class PostController extends Controller
      */
     public function show($slug)
     {
+        // Post
         $post = Post::where('slug', $slug)->firstOrFail();
         if (! Auth::check() && ! $post->published) {
             abort(404);
         }
+
+        // Date
         $carbon = Carbon::now();
         $date = $carbon->parse($post->updated_at);
         $post->date = $date;
-        return view('posts.show', compact('post'));
+
+        // Inline CSS
+        $css = Storage::get('/public/css/app.css');
+
+        return view('posts.show', compact('post', 'css'));
     }
 
     /**
