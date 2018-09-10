@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePost as StorePostRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -80,7 +81,9 @@ class PostController extends Controller
         // Inline CSS
         $css = Storage::disk('public')->get('/css/app.css');
         
-        return view('posts.show', compact('post', 'css'));
+        return response()
+                ->view('posts.show', compact('post', 'css'))
+                ->header('Cache-Control', 'cache, public, max-age=86400');
     }
 
     /**
