@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5 {
     -webkit-margin-after: 0;
     margin: 0;
     font-family: $font-family-headline;
-    font-weight: 700;
+    font-weight: 700; 
 }
 
 h1 {
@@ -62,40 +62,40 @@ h1 {
     border: $container-border;
 }
 
-.slide-up-container {
-    animation-name: slideUpContainer;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in-out;
-}
+// .slide-up-container {
+//     animation-name: slideUpContainer;
+// 	animation-iteration-count: 1;
+// 	animation-timing-function: ease-in-out;
+// }
 
-@keyframes slideUpContainer {
-	0% {border: 1px solid transparent; background: transparent; margin-top: $space-7;}
-	100% {border: $container-border; background: $container-bg; margin-top: $space-6;}
-}
+// @keyframes slideUpContainer {
+// 	0% {border: 1px solid transparent; background: transparent; margin-top: $space-7;}
+// 	100% {border: $container-border; background: $container-bg; margin-top: $space-6;}
+// }
 
-.fade-in {
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in-out;
-}
-.time-1 {
-    animation-duration: $transition-time-1;
-}
-.time-2 {
-    animation-duration: $transition-time-2;
-}
-.time-3 {
-    animation-duration: $transition-time-3;
-}
-.time-4 {
-    animation-duration: $transition-time-4;
-}
+// .fade-in {
+// 	opacity: 1;
+// 	animation-name: fadeInOpacity;
+// 	animation-iteration-count: 1;
+// 	animation-timing-function: ease-in-out;
+// }
+// .time-1 {
+//     animation-duration: $transition-time-1;
+// }
+// .time-2 {
+//     animation-duration: $transition-time-2;
+// }
+// .time-3 {
+//     animation-duration: $transition-time-3;
+// }
+// .time-4 {
+//     animation-duration: $transition-time-4;
+// }
 
-@keyframes fadeInOpacity {
-	0% {opacity: 0;}
-	100% {opacity: 1;}
-}
+// @keyframes fadeInOpacity {
+// 	0% {opacity: 0;}
+// 	100% {opacity: 1;}
+// }
 
 @media all and (max-width: 768px) {
     .post-container {
