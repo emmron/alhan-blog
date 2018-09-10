@@ -83,7 +83,8 @@ class PostController extends Controller
         
         return response()
                 ->view('posts.show', compact('post', 'css'))
-                ->header('Cache-Control', 'cache, public, max-age=86400');
+                ->header('Cache-Control', 'cache, public, max-age=604800')
+                ->header('Last-Modified', $date->toRfc7231String());
     }
 
     /**
