@@ -10,13 +10,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="https://fonts.gstatic.com/s/lora/v12/0QIgMX1D_JOuO7HeNtxumtus-7w.woff2">
         <style>
-            @if (!isset($css)) 
-                @php
-                    $css = Cache::remember('css', 22*60, function() {
-                        return Storage::disk('public')->get('/css/app.css');
-                    }); 
-                @endphp 
-            @endif
             {!! $css !!}
         </style> 
     </head>

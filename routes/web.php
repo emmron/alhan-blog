@@ -4,7 +4,12 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-Route::view('privacy', 'static.privacy');
+Route::get('privacy', function() {
+    $css = Cache::remember('css', 22*60, function() {
+        return Storage::disk('public')->get('/css/app.css');
+    });
+    return view('static.privacy', compact('css'));
+});
 
 Route::get('posts', 'PostController@index');
 Route::get('p/{slug}', 'PostController@show');
