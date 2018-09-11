@@ -10,6 +10,7 @@ use App\Http\Requests\StorePost as StorePostRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -20,7 +21,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('published', 1)->get()->sortByDesc('updated_at');
+        $posts = Cache::remember('posts-published', 22*60, function() {
+            return Post::where('published', 1)->get()->sortByDesc('updated_at');
+        });
+        // $posts = Post::where('published', 1)->get()->sortByDesc('updated_at');
         return view('posts.index', compact('posts'));
     }
 
@@ -56,6 +60,7 @@ class PostController extends Controller
         $data = $request->only('title', 'body', 'published');
         $data['slug'] = str_slug($data['title'], '-');
         $post = Post::create($data);
+        Cache::flush();
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
@@ -68,23 +73,30 @@ class PostController extends Controller
     public function show($slug)
     {
         // Post
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $cachePostKey = 'post_' . $slug;
+        if (Cache::has($cachePostKey)) {
+            $post = Cache::get($cachePostKey);
+        }
+        else {
+            $post = Post::where('slug', $slug)->firstOrFail();
+            $post_last_modified = Carbon::parse($post->updated_at)->toRfc7231String();
+            $post->last_modified = $post_last_modified;
+            Cache::put($cachePostKey, $post, 22*60);
+        }
+        // $post = Post::where('slug', $slug)->firstOrFail();
         if (! Auth::check() && ! $post->published) {
             abort(404);
         }
 
-        // Date
-        $carbon = Carbon::now();
-        $date = $carbon->parse($post->updated_at);
-        $post->date = $date;
-
         // Inline CSS
-        $css = Storage::disk('public')->get('/css/app.css');
-        
+        // $css = Storage::disk('public')->get('/css/app.css');
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
         return response()
                 ->view('posts.show', compact('post', 'css'))
                 ->header('Cache-Control', 'cache, public, max-age=604800')
-                ->header('Last-Modified', $date->toRfc7231String());
+                ->header('Last-Modified', $post->last_modified);
     }
 
     /**
@@ -109,6 +121,7 @@ class PostController extends Controller
     {
         $data = $request->only('title', 'body', 'published');
         $post->update($data);
+        Cache::flush();
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
@@ -121,6 +134,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+        Cache::flush();
         return redirect()->action('PostController@index');
     }
 }

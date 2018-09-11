@@ -14,10 +14,10 @@
             <a href="/posts">Published</a>
             <a href="/posts/drafts">Drafts</a>
         @endif
-        <ul>
+        <ol>
         @foreach ($posts as $post)
             <li><a href="/p/{{ $post->slug }}">{{ $post->title }}</a></li>
         @endforeach
-        </ul>
+        </ol>
     </body>
 </html>

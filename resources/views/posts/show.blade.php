@@ -21,7 +21,7 @@
                     @endif
                 @endif
                 <h1>{{ $post->title }}</h1>
-                <small>{{ $post->date }}</small>
+                <small>{{ $post->updated_at }}</small>
                 <p>{!! $post->body !!}</p>
             </div>
             <div class="header  time-4">
