@@ -39,7 +39,10 @@ class PostController extends Controller
     public function drafts()
     {
         $posts = Post::where('published', 0)->get()->sortByDesc('updated_at');
-        return view('posts.index', compact('posts'));
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
+        return view('posts.index', compact('posts', 'css'));
     }
 
     /**
