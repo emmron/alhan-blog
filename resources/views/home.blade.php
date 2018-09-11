@@ -1,19 +1,13 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta name="robots" content="{{ app()->env == 'production' ? 'index, follow' : 'noindex, nofollow' }}">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Blog</title>
-    </head>
-    <body>
-        <h1>Blog Home (Demo)</h1>
-        <ul>
+@extends('layouts.blog')
+
+@section('content')
+        @if (Auth::check())
+            <a href="/posts">Published</a>
+            <a href="/posts/drafts">Drafts</a>
+        @endif
+        <div class="posts">
         @foreach ($posts as $post)
-            <li><a href="/p/{{ $post->slug }}">{{ $post->title }}</a></li>
+            <div class="container headline-container"><a class="plain" href="/p/{{ $post->slug }}"><h2>{{ $post->title }}</h2></a></div>
         @endforeach
-        </ul>
-        <a href="/posts">See All Posts</a>
-    </body>
-</html>
+        </div> 
+@endsection

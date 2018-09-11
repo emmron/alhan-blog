@@ -21,11 +21,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        if(app()->env == 'local') { Cache::flush();}
         $posts = Cache::remember('posts-published', 22*60, function() {
             return Post::where('published', 1)->get()->sortByDesc('updated_at');
         });
-        // $posts = Post::where('published', 1)->get()->sortByDesc('updated_at');
-        return view('posts.index', compact('posts'));
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
+        return view('posts.index', compact('posts', 'css'));
     }
 
     /**
@@ -72,6 +75,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
+        if(app()->env == 'local') { Cache::flush();}
         // Post
         $cachePostKey = 'post_' . $slug;
         if (Cache::has($cachePostKey)) {

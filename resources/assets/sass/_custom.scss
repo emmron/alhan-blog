@@ -18,10 +18,18 @@ a {
     border-bottom: 4px solid $pink;
 }
 
+a.plain {
+    border-bottom: 0;
+}
+
 a:hover {
     background: $pink-transparent;
     border-bottom-color: transparent;
     transition: $transition-time-2;
+}
+
+a.plain:hover {
+    background: transparent;
 }
 
 h1, h2, h3, h4, h5 {
@@ -54,24 +62,48 @@ h1 {
     font-weight: 700;
 }
 
-.post-container {
-    max-width: $max-container-width;
-    margin: $space-6 auto; 
-    padding: $space-7 $space-8;
+.container {
     background: $container-bg;
     border: $container-border;
 }
 
+.post-container {
+    max-width: $max-container-width;
+    margin: $space-6 auto; 
+    padding: $space-7 $space-8;
+}
 
-// .slide-up-container {
-//     animation-name: slideUpContainer;
+.headline-container {
+    padding: 80px;
+    width: 16%;
+    flex-grow: 1;
+    margin: .2%;
+    display: flex;
+    align-items: center;
+}
+
+.headline-container:first-child {
+    width: 49.2%;
+}
+
+.headline-container:first-child h2 {
+    font-size: $font-size-headline * .8;
+}
+
+.posts {
+    display: flex;
+    flex-flow: wrap;
+}
+
+// .color-fade-in {
+//     animation-name: colorFade;
 // 	animation-iteration-count: 1;
-// 	animation-timing-function: ease-in-out;
+// 	animation-timing-function: ease-in;
 // }
 
-// @keyframes slideUpContainer {
-// 	0% {border: 1px solid transparent; background: transparent; margin-top: $space-7;}
-// 	100% {border: $container-border; background: $container-bg; margin-top: $space-6;}
+// @keyframes colorFade {
+// 	0% {background: $container-bg; }
+// 	100% { background: #fff;}
 // }
 
 // .fade-in {
@@ -83,9 +115,9 @@ h1 {
 // .time-1 {
 //     animation-duration: $transition-time-1;
 // }
-// .time-2 {
-//     animation-duration: $transition-time-2;
-// }
+.time-2 {
+    animation-duration: $transition-time-2;
+}
 // .time-3 {
 //     animation-duration: $transition-time-3;
 // }
