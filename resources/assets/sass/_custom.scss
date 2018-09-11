@@ -8,11 +8,11 @@ html, body {
     line-height: $line-height-base;
 }
 
-p {
+p, ul li {
     font-size: $font-size-base;
 }
 
-a {
+a { 
     text-decoration: none;
     color: inherit;
     border-bottom: 4px solid $pink;
@@ -100,6 +100,11 @@ h1 {
 .posts {
     display: flex;
     flex-flow: wrap;
+}
+
+.footer {
+    padding-top: $space-5;
+    padding-bottom: $space-5;
 }
 
 .mb-1 {
