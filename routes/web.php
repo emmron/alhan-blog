@@ -4,6 +4,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::view('privacy', 'static.privacy');
+
 Route::get('posts', 'PostController@index');
 Route::get('p/{slug}', 'PostController@show');
 
