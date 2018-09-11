@@ -8,9 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 
-class HomeController extends Controller
+class PagesController extends Controller
 {
-    public function index()
+    public function home()
     {
         // $posts = \App\Post::where('published', 1)->get()->sortByDesc('updated_at')->forPage(1,10);
         if(app()->env == 'local') { Cache::flush();}
@@ -21,5 +21,13 @@ class HomeController extends Controller
             return Storage::disk('public')->get('/css/app.css');
         });
         return view('home', compact('posts', 'css'));
+    }
+
+    public function privacy() 
+    {
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
+        return view('static.privacy', compact('css'));
     }
 }
