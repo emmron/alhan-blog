@@ -12,11 +12,16 @@
         <style>{!! $css !!}</style>
     </head>
     <body>
-        <div class="page-container">
-            @yield('content')
-            <div class="header">
+        <div class="page">
+            <div class="container header">
                 <div class="logo"><a href="/">alhan.co</a></div>
             </div>
+            @if (Auth::check())
+            <div class="container admin-tools mb-2">
+                @yield('admin-tools')
+            </div>
+            @endif
+            @yield('content')
         </div>
     </body>
 </html>
