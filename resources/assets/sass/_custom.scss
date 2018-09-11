@@ -46,31 +46,27 @@ h1 {
     margin-bottom: $space-4;
 }
 
-.page-container {
+
+
+.page {
     display: flex;
-    flex-direction: column-reverse;
-}
-
-.header {
-    margin: 0 auto;
-    padding: $space-4 0;
-}
-
-.logo {
-    font-size: $font-size-base*1.2;
-    font-family: $font-family-headline;
-    font-weight: 700;
+    flex-direction: column; 
 }
 
 .container {
+    width: $container-width;
+    max-width: $max-container-width;
+    margin: auto;
+}
+
+.content-container {
     background: $container-bg;
     border: $container-border;
 }
 
 .post-container {
-    max-width: $max-container-width;
-    margin: $space-6 auto; 
-    padding: $space-7 $space-8;
+    margin: $space-5 auto; 
+    padding: $space-7 (100%-$container-width)/2;
 }
 
 .headline-container {
@@ -90,9 +86,32 @@ h1 {
     font-size: $font-size-headline * .8;
 }
 
+.header {
+    margin: 0 auto;
+    padding: $space-4 0;
+}
+
+.logo {
+    font-size: $font-size-base*1.2;
+    font-family: $font-family-headline;
+    font-weight: 700;
+}
+
 .posts {
     display: flex;
     flex-flow: wrap;
+}
+
+.mb-1 {
+    margin-bottom: $space-1;
+}
+
+.mb-2 {
+    margin-bottom: $space-2;
+}
+
+.mb-3 {
+    margin-bottom: $space-3;
 }
 
 // .color-fade-in {
@@ -115,9 +134,9 @@ h1 {
 // .time-1 {
 //     animation-duration: $transition-time-1;
 // }
-.time-2 {
-    animation-duration: $transition-time-2;
-}
+// .time-2 {
+//     animation-duration: $transition-time-2;
+// }
 // .time-3 {
 //     animation-duration: $transition-time-3;
 // }
