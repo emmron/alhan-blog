@@ -14,9 +14,9 @@
 @endsection
 
 @section('content')
-        <div class="posts">
+        <div class="list flex-wrap">
         @foreach ($posts as $post)
-            <div class="content-container headline-container"><a class="plain" href="/p/{{ $post->slug }}"><h2>{{ $post->title }}</h2></a></div>
+            <div class="framed list-item"><a class="plain" href="/p/{{ $post->slug }}"><h2>{{ $post->title }}</h2></a></div>
         @endforeach
         </div> 
 @endsection
