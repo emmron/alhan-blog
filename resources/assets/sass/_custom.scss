@@ -46,8 +46,6 @@ h1 {
     margin-bottom: $space-4;
 }
 
-
-
 .page {
     display: flex;
     flex-direction: column; 
@@ -86,9 +84,8 @@ h1 {
     font-size: $font-size-headline * .8;
 }
 
-.header {
-    margin: 0 auto;
-    padding: $space-4 0;
+.header, .footer {
+    padding: $space-5 0;
 }
 
 .logo {
@@ -100,11 +97,6 @@ h1 {
 .posts {
     display: flex;
     flex-flow: wrap;
-}
-
-.footer {
-    padding-top: $space-5;
-    padding-bottom: $space-5;
 }
 
 .mb-1 {
