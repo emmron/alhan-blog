@@ -1,5 +1,13 @@
 @extends('layouts.blog')
 
+@section('title')
+    All blog posts about Enterprise A/B Testing
+@endsection
+
+@section('description')
+    All blog posts on one page.
+@endsection  
+
 @section('admin-tools')
             <a href="/posts">Published</a>
             <a href="/posts/drafts">Drafts</a>
