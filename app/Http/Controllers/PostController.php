@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use ResponseCache;
 
 class PostController extends Controller
 {
@@ -19,16 +20,17 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if(app()->env == 'local') { Cache::flush();}
+        if(app()->env == 'local') { Cache::flush(); ResponseCache::clear();}
         $posts = Cache::remember('posts-published', 22*60, function() {
             return Post::where('published', 1)->get()->sortByDesc('updated_at');
         });
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
-        return view('posts.index', compact('posts', 'css'));
+        $amp = $request->query('amp') > 0 ? true : null;
+        return view('posts.index', compact('posts', 'css', 'amp'));
     }
 
     /**
@@ -76,9 +78,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
-        if(app()->env == 'local') { Cache::flush();}
+        if(app()->env == 'local') { Cache::flush();ResponseCache::clear();}
         // Post
         $cachePostKey = 'post_' . $slug;
         if (Cache::has($cachePostKey)) {
@@ -100,8 +102,10 @@ class PostController extends Controller
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
+
+        $amp = $request->query('amp') > 0 ? true : null;
         return response()
-                ->view('posts.show', compact('post', 'css'))
+                ->view('posts.show', compact('post', 'css', 'amp'))
                 ->header('Cache-Control', 'cache, public, max-age=604800')
                 ->header('Last-Modified', $post->last_modified);
     }
