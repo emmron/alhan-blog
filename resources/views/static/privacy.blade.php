@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 
 @section('content')
-    <div class="container content-container post-container">
+    <div class="framed">
         <h1>Privacy Policy</h1>
         <small></small>
         <p>It's very simple: this website uses <a href="http://analytics.google.com/">Google Analytics</a>, which uses cookies to track <strong>anonymous</strong> user activity, such as page visits and clicks. This information is securely transmitted to Google Analytics and is primarily used to boost the website owner's ego whenever possible.</p>
