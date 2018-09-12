@@ -101,6 +101,9 @@ h1, .h1 {
 }
 
 @media all and (max-width: 768px) {
+    .container {
+        width: $container-width + 10;
+    }
     .content {
         padding: $space-4;
         margin: $space-2 auto;
@@ -118,6 +121,9 @@ h1, .h1 {
 }
 
 @media all and (max-width: 376px) {
+    .container {
+        width: $container-width + 15;
+    }
     .content {
         padding-left: $space-3;
         padding-right: $space-3;
