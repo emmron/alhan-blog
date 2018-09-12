@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-        <div class="posts">
+        <div class="list">
         @foreach ($posts as $post)
             <div class="container content-container headline-container"><a class="plain" href="/p/{{ $post->slug }}"><h2>{{ $post->title }}</h2></a></div>
         @endforeach

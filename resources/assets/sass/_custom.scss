@@ -1,5 +1,5 @@
 html, body {
-    font-size: 16px;
+    font-size: $font-size-html;
     margin: 0;
     padding: 0;
     color: $font-color;
@@ -8,8 +8,8 @@ html, body {
     line-height: $line-height-base;
 }
 
-p, ul li {
-    font-size: $font-size-base;
+small, .small {
+    font-size: 80%;
 }
 
 a { 
@@ -18,21 +18,18 @@ a {
     border-bottom: 4px solid $pink;
 }
 
-a.plain {
-    border-bottom: 0;
-}
-
 a:hover {
     background: $pink-transparent;
     border-bottom-color: transparent;
     transition: $transition-time-2;
 }
 
-a.plain:hover {
-    background: transparent;
+.list a, .list a:hover {
+    background: none;
+    border-bottom: none;
 }
 
-h1, h2, h3, h4, h5 {
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     margin: 0;
@@ -40,34 +37,28 @@ h1, h2, h3, h4, h5 {
     font-weight: 700; 
 }
 
-h1 {
+h1, .h1 {
     font-size: $font-size-headline;
     line-height: $line-height-headline;
-    margin-bottom: $space-4;
-}
-
-.page {
-    display: flex;
-    flex-direction: column; 
 }
 
 .container {
     width: $container-width;
     max-width: $max-container-width;
-    margin: auto;
+    margin: 0 auto;
 }
 
-.content-container {
+.framed {
+    padding: $space-7 (100%-$container-width)/2;
     background: $container-bg;
     border: $container-border;
 }
 
-.post-container {
+.content {
     margin: $space-5 auto; 
-    padding: $space-7 (100%-$container-width)/2;
 }
 
-.headline-container {
+.list-item {
     padding: 80px;
     width: 16%;
     flex-grow: 1;
@@ -76,27 +67,21 @@ h1 {
     align-items: center;
 }
 
-.headline-container:first-child {
+.list-item:first-child {
     width: 49.2%;
 }
 
-.headline-container:first-child h2 {
+.list-item:first-child h2 {
     font-size: $font-size-headline * .8;
 }
 
-.header, .footer {
-    padding: $space-5 0;
-}
-
-.logo {
-    font-size: $font-size-base*1.2;
-    font-family: $font-family-headline;
-    font-weight: 700;
-}
-
-.posts {
+.flex-wrap {
     display: flex;
     flex-flow: wrap;
+}
+
+.pad-5 {
+    padding: $space-5 0; 
 }
 
 .mb-1 {
@@ -109,6 +94,34 @@ h1 {
 
 .mb-3 {
     margin-bottom: $space-3;
+}
+
+.mb-4 {
+    margin-bottom: $space-4;
+}
+
+@media all and (max-width: 768px) {
+    .content {
+        padding: $space-4;
+        margin: $space-2 auto;
+    }
+    .h3 {
+        font-size: $font-size-base;
+    }
+    h1 {
+        font-size: $font-size-headline *.5;
+        margin-bottom: $space-2;
+    }
+    p {
+        font-size: $font-size-base * .8;
+    }
+}
+
+@media all and (max-width: 376px) {
+    .content {
+        padding-left: $space-3;
+        padding-right: $space-3;
+    }
 }
 
 // .color-fade-in {
@@ -145,27 +158,3 @@ h1 {
 // 	0% {opacity: 0;}
 // 	100% {opacity: 1;}
 // }
-
-@media all and (max-width: 768px) {
-    .post-container {
-        padding: $space-4;
-        margin: $space-2 auto;
-    }
-    .logo {
-        font-size: $font-size-base;
-    }
-    h1 {
-        font-size: $font-size-headline *.5;
-        margin-bottom: $space-2;
-    }
-    p {
-        font-size: $font-size-base * .8;
-    }
-}
-
-@media all and (max-width: 376px) {
-    .post-container {
-        padding-left: $space-3;
-        padding-right: $space-3;
-    }
-}

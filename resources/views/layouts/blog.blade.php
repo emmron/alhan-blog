@@ -12,17 +12,17 @@
         <style>{!! $css !!}</style> 
     </head>
     <body>
-        <div class="container page">
-            <div class="header">
-                <div class="logo"><a href="/">Home</a></div>
+        <div class="container">
+            <div class="pad-5">
+                <div class="h3"><a href="/">Home</a></div>
             </div>
             @if (Auth::check())
-            <div class="admin-tools mb-2">
+            <div class="mb-2">
                 @yield('admin-tools')
             </div>
             @endif
             @yield('content')
-            <div class="footer">
+            <div class="pad-5">
                     <a href="/privacy">Privacy</a>
             </div>
         </div>

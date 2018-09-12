@@ -12,14 +12,14 @@
 @endsection
 
 @section('content')
-    <div class="container content-container post-container">
-        <h1>{{ $post->title }}</h1>
-        <small><a href="#">Alhan Keser</a> 
+    <div class="content framed">
+        <h1 class="mb-4">{{ $post->title }}</h1>
+        <div class="small mb-4"><a href="#">Alhan Keser</a> 
         Posted <strong>{{ date('M d, Y', strtotime($post->created_at)) }}</strong>
         @if($post->updated_at != $post->created_at) 
             and updated <strong>{{ date('M d, Y', strtotime($post->updated_at)) }}</strong>
         @endif
-        </small>
+    </div>
         <p>{!! $post->body !!}</p>
     </div>
 @endsection
