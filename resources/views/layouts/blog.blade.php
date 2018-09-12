@@ -12,7 +12,7 @@
         <style>{!! $css !!}</style> 
     </head>
     <body>
-        <div class="container">
+        <div id="app" class="container">
             <div class="pad-5">
                 <div class="h3"><a href="/">Home</a></div>
             </div>
@@ -26,5 +26,6 @@
                     <a href="/privacy">Privacy</a>
             </div>
         </div>
+        <script async src="/js/app.js"></script>
     </body>
 </html>

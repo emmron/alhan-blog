@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use ResponseCache;
 
 class PostController extends Controller
 {
@@ -21,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        if(app()->env == 'local') { Cache::flush();}
+        if(app()->env == 'local') { Cache::flush(); ResponseCache::clear();}
         $posts = Cache::remember('posts-published', 22*60, function() {
             return Post::where('published', 1)->get()->sortByDesc('updated_at');
         });
@@ -78,7 +79,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        if(app()->env == 'local') { Cache::flush();}
+        if(app()->env == 'local') { Cache::flush();ResponseCache::clear();}
         // Post
         $cachePostKey = 'post_' . $slug;
         if (Cache::has($cachePostKey)) {
