@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 
 class PagesController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         // $posts = \App\Post::where('published', 1)->get()->sortByDesc('updated_at')->forPage(1,10);
         if(app()->env == 'local') { Cache::flush();}
@@ -20,7 +20,8 @@ class PagesController extends Controller
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
-        return view('home', compact('posts', 'css'));
+        $amp = $request->query('amp') > 0 ? true : null;
+        return view('home', compact('posts', 'css', 'amp'));
     }
 
     public function privacy() 
