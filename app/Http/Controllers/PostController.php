@@ -57,7 +57,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
+        return view('posts.create', compact('css'));
     }
 
     /**
@@ -125,7 +128,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $css = Cache::remember('css', 22*60, function() {
+            return Storage::disk('public')->get('/css/app.css');
+        });
+        return view('posts.edit', compact('post', 'css'));
     }
 
     /**
