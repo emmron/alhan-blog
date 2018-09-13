@@ -1,16 +1,17 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta name="robots" content="{{ app()->env == 'production' ? 'index, follow' : 'noindex, nofollow' }}">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Blog</title>
-    </head>
-    <body>
-        <a href="/">Home</a>
-        <h1>Edit Post</h1>
-        <a href="/p/{{ $post->slug }}" target="_blank">Open Post in Tab</a>
+@extends('layouts.blog')
+
+@section('title')
+    Edit post
+@endsection
+
+@section('admin-tools')
+    <a href="/p/{{ $post->slug }}" target="_blank">Open Post in Tab</a>
+@endsection
+
+@section('content')
+<div class="framed">
+    <h1>Edit Post</h1>
+        
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -40,5 +41,5 @@
             {!! Form::submit('Save Post'); !!}
         {!! Form::close() !!}
         <a href="/posts/{{ $post->id }}/destroy">Delete Post</a>
-    </body>
-</html>
+</div>
+@endsection
