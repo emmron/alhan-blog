@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use ResponseCache;
 
 class PostTest extends TestCase
 {
@@ -17,6 +18,7 @@ class PostTest extends TestCase
     {
         $post = factory(\App\Post::class)->create();
         $post->update(['published' => 1]);
+        ResponseCache::clear();
         $response = $this->get('/');
         $response->assertSee($post->title);
     }
@@ -31,6 +33,7 @@ class PostTest extends TestCase
         $posts = \App\Post::all();
         $posts->first()->update(['published' => 1]);
         $posts->last()->update(['published' => 1]);
+        ResponseCache::clear();
         $response = $this->get('/posts');
         $response->assertSee($posts->first()->title);
         $response->assertSee($posts->last()->title);

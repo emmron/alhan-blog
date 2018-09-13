@@ -13,9 +13,12 @@ class PagesController extends Controller
     public function home(Request $request)
     {
         // $posts = \App\Post::where('published', 1)->get()->sortByDesc('updated_at')->forPage(1,10);
-        if(app()->env == 'local') { Cache::flush();}
+        // if(app()->env == 'local') { 
+        //     Cache::flush();
+        //     ResponseCache::clear();
+        // }
         $posts = Cache::remember('posts-published', 22*60, function() {
-            return \App\Post::where('published', 1)->get()->sortByDesc('updated_at')->forPage(1,10);
+            return \App\Post::where('published', 1)->get()->sortByDesc('created_at')->forPage(1,10);
         });
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');

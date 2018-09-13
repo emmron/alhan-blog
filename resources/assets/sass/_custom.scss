@@ -9,7 +9,7 @@ html, body {
 }
 
 small, .small {
-    font-size: 80%;
+    font-size: 70%;
 }
 
 a { 
@@ -35,11 +35,19 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     margin: 0;
     font-family: $font-family-headline;
     font-weight: 700; 
+    line-height: $line-height-headline;
 }
 
 h1, .h1 {
     font-size: $font-size-headline;
-    line-height: $line-height-headline;
+}
+
+h2, .h2 {
+    font-size: $font-size-headline * .8;
+}
+
+h3, .h3 {
+    font-size: $font-size-headline * .6;
 }
 
 .container {
@@ -59,8 +67,8 @@ h1, .h1 {
 }
 
 .list-item {
-    padding: 80px;
-    width: 16%;
+    padding: $space-5;
+    width: 33%;
     flex-grow: 1;
     margin: .2%;
     display: flex;
@@ -71,7 +79,7 @@ h1, .h1 {
     width: 49.2%;
 }
 
-.list-item:first-child h2 {
+.list-item:first-child h3 {
     font-size: $font-size-headline * .8;
 }
 
@@ -106,27 +114,38 @@ h1, .h1 {
     }
     .content {
         padding: $space-4;
-        margin: $space-2 auto;
+        margin: 0 auto;
     }
-    .h3 {
+    .list-item {
+        padding: $space-4;
+    }
+    .list-item:first-child h3 {
+        font-size: $font-size-headline * .6;
+    }
+    h1, .h1{
+        font-size: $font-size-headline *.8;
+    }
+    h3, .h3 {
         font-size: $font-size-base;
-    }
-    h1 {
-        font-size: $font-size-headline *.5;
-        margin-bottom: $space-2;
-    }
-    p {
-        font-size: $font-size-base * .8;
     }
 }
 
-@media all and (max-width: 376px) {
+@media all and (max-width: 486px) {
+    .mb-4 {
+        margin-bottom: $space-3;
+    }
     .container {
         width: $container-width + 15;
     }
     .content {
         padding-left: $space-3;
         padding-right: $space-3;
+    }
+    .pad-5 {
+        padding: $space-3 0; 
+    }
+    html, body {
+        font-size: $font-size-html * .8;
     }
 }
 
