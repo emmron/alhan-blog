@@ -22,15 +22,18 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if(app()->env == 'local') { Cache::flush(); ResponseCache::clear();}
+        // if(app()->env == 'local') { 
+        //     Cache::flush(); 
+        //     ResponseCache::clear();
+        // }
         $posts = Cache::remember('posts-published', 22*60, function() {
-            return Post::where('published', 1)->get()->sortByDesc('updated_at');
+            return Post::where('published', 1)->get()->sortByDesc('created_at');
         });
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
         $amp = $request->query('amp') > 0 ? true : null;
-        return view('posts.index', compact('posts', 'css', 'amp'));
+        return view('home', compact('posts', 'css', 'amp'));
     }
 
     /**
@@ -40,11 +43,11 @@ class PostController extends Controller
      */
     public function drafts()
     {
-        $posts = Post::where('published', 0)->get()->sortByDesc('updated_at');
+        $posts = Post::where('published', 0)->get()->sortByDesc('created_at');
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
-        return view('posts.index', compact('posts', 'css'));
+        return view('home', compact('posts', 'css'));
     }
 
     /**
@@ -69,6 +72,7 @@ class PostController extends Controller
         $data['slug'] = str_slug($data['title'], '-');
         $post = Post::create($data);
         Cache::flush();
+        ResponseCache::clear();
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
@@ -80,7 +84,10 @@ class PostController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        if(app()->env == 'local') { Cache::flush();ResponseCache::clear();}
+        // if(app()->env == 'local') { 
+        //     Cache::flush();
+        //     ResponseCache::clear();
+        // }
         // Post
         $cachePostKey = 'post_' . $slug;
         if (Cache::has($cachePostKey)) {
@@ -133,6 +140,7 @@ class PostController extends Controller
         $data = $request->only('title', 'body', 'published');
         $post->update($data);
         Cache::flush();
+        ResponseCache::clear();
         return redirect()->action('PostController@show', ['slug' => $post->slug]);
     }
 
@@ -146,6 +154,7 @@ class PostController extends Controller
     {
         $post->delete();
         Cache::flush();
+        ResponseCache::clear();
         return redirect()->action('PostController@index');
     }
 }
