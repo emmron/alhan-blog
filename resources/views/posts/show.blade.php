@@ -15,13 +15,13 @@
     <div class="content framed">
         <h1 class="mb-4">{{ $post->title }}</h1>
         <div class="small mb-4"> 
-        Last updated <strong>{{ date('M d, Y', strtotime($post->created_at)) }}</strong>
+        Posted <strong>{{ date('M d, Y', strtotime($post->created_at)) }}</strong>
         by <a href="#">Alhan Keser</a>
         @if($post->updated_at != $post->created_at) 
             and updated <strong>{{ date('M d, Y', strtotime($post->updated_at)) }}</strong>
         @endif
     </div>
-        <p>{!! $post->body !!}</p>
+        <p>{!! html_entity_decode($post->body) !!}</p>
     </div>
 @endsection
             
