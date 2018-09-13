@@ -1,15 +1,17 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta name="robots" content="{{ app()->env == 'production' ? 'index, follow' : 'noindex, nofollow' }}">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Blog</title>
-    </head>
-    <body>
-        <a href="/">Home</a>
-        <h1>Create Post</h1>
+@extends('layouts.blog')
+
+@section('title')
+    Create post
+@endsection
+
+@section('admin-tools')
+            <a href="/posts">Published</a>
+            <a href="/posts/drafts">Drafts</a>
+@endsection
+
+@section('content')
+<div class="framed">
+    <h1>Create Post</h1>
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -36,5 +38,5 @@
             <br>
             {!! Form::submit('Save Post'); !!}
         {!! Form::close() !!}
-    </body>
-</html>
+</div>
+@endsection

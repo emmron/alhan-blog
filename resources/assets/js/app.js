@@ -21,5 +21,12 @@ const app = new Vue({
     el: '#app',
     mounted() {
         window.timing.printSimpleTable();
+        document.onkeypress = function(e) {
+            e = e || window.event;
+            var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+            if (charCode === 101) {
+                document.getElementById('editLink').click();
+            }
+        };
     }
 });
