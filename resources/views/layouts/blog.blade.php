@@ -32,6 +32,6 @@
                     <a href="/privacy">Privacy</a>
             </div>
         </div>
-        @isset($amp) @else<script async src="/js/app.js"></script>@endisset
+        @isset($amp) @else<!--<script async src="/js/app.js"></script>-->@endisset
     </body>
 </html>

@@ -16,7 +16,7 @@
 @section('content')
         <div class="list flex-wrap">
         @foreach ($posts as $post)
-            <div class="framed list-item"><a class="plain" href="/p/{{ $post->slug }}"><h2>{{ $post->title }}</h2></a></div>
+            <div class="framed list-item"><a href="/p/{{ $post->slug }}"><h3>{{ $post->title }}</h3></a></div>
         @endforeach
         </div> 
 @endsection
