@@ -28,6 +28,11 @@
             </div>
             @endif
             @yield('content')
+            @if (Auth::check())
+            <div class="mb-2">
+                @yield('images')
+            </div>
+            @endif
             <div class="pad-5">
                     <a href="/privacy">Privacy</a>
             </div>
@@ -37,6 +42,8 @@
             @if (Auth::check())
             <script async src="/js/app.js"></script>
             @endif
+            @component('components.inline-scripts')
+            @endcomponent
         @endisset
     </body>
 </html>

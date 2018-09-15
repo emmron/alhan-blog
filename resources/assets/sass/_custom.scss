@@ -66,6 +66,10 @@ h3, .h3 {
     margin: $space-5 auto; 
 }
 
+.content img {
+    max-width: 100%;
+}
+
 .list-item {
     padding: $space-5;
     width: 33%;
