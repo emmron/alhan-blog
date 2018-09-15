@@ -66,8 +66,9 @@ h3, .h3 {
     margin: $space-5 auto; 
 }
 
-.content img {
+.content img { 
     max-width: 100%;
+    display: block;
 }
 
 .list-item {
@@ -110,6 +111,10 @@ h3, .h3 {
 
 .mb-4 {
     margin-bottom: $space-4;
+}
+
+.mt-3 {
+    margin-top: $space-3;
 }
 
 @media all and (max-width: 768px) {
