@@ -21,8 +21,21 @@
             and updated <strong>{{ date('M d, Y', strtotime($post->updated_at)) }}</strong>
         @endif
     </div>
-        <p>{!! html_entity_decode($post->body) !!}</p>
+        <div>{!! html_entity_decode($post->body) !!}</div>
     </div>
 @endsection
             
-        
+@section('images')
+    @foreach($post->images as $image)
+        <div>
+            @component('components.image', ['image' => $image])
+            @endcomponent
+        </div>
+        <div>
+            <textarea rows="20">
+                @component('components.image', ['image' => $image])
+                @endcomponent
+            </textarea>
+        </div>
+    @endforeach
+@endsection
