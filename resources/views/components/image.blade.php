@@ -16,6 +16,6 @@
             {{ $image->medium }} 480w,
             {{ $image->large }} 640w" 
         data-src="{{ $image->large }}" alt="{{ $image->alt }}">
-    <div class="small">{{ $image->alt }}</div>
 </picture>
+<div class="small">{{ $image->alt }}</div>
 </div>
