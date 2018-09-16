@@ -13,8 +13,8 @@ $max-container-width: 800px;
 $container-width: 80%;
 
 // Typography
-$font-family-headline: "Lora", "Helvetica Rounded", "Arial Rounded MT Bold", "Arial", sans-serif;
-$font-family-body: "Helvetica Neue", "Calibri", "Helvetica", "Arial", sans-serif;
+$font-family-headline: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif;
+$font-family-body: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif;
 $font-size-html: 20px;
 $font-size-base: 1rem;
 $font-size-headline: $font-size-base * 2.4;

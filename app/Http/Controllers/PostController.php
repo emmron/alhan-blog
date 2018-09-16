@@ -131,7 +131,7 @@ class PostController extends Controller
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
-        return view('posts.edit', compact('post', 'css'));
+        return view('posts.edit-vue', compact('post', 'css'));
     }
 
     /**
@@ -144,6 +144,7 @@ class PostController extends Controller
     public function update(StorePostRequest $request, Post $post)
     {
         $data = $request->only('title', 'body', 'published');
+        // dd($data);
         $post->update($data);
         Cache::flush();
         ResponseCache::clear();

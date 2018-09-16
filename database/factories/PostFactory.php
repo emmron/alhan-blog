@@ -11,3 +11,4 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'published' => $faker->boolean($chanceOfGettingTrue = 90),
     ];
 });
+
