@@ -22,7 +22,7 @@
     <body>
         <div id="app" class="container">
             <div class="pad-5">
-                <div class="h3"><a href="/">Home</a></div>
+                <div class="h3"><a href="/">HOME</a></div>
             </div>
             @if (Auth::check())
             <div class="mb-2">

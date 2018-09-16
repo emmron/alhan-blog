@@ -14,6 +14,7 @@
 @endsection
 
 @section('content')
+        <div class="mb-4">This blog is about enterprise a/b testing, web development, machine learning and cycling.</div>
         <div class="list flex-wrap">
         @foreach ($posts as $post)
             <div class="framed list-item"><a href="/p/{{ $post->slug }}"><h3>{{ $post->title }}</h3></a></div>
