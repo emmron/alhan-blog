@@ -6,6 +6,10 @@ html, body {
     background: $body-bg;
     font-family: $font-family-body;
     line-height: $line-height-base;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
 }
 
 small, .small {
