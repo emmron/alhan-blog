@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 
 class ImageController extends Controller
 {
@@ -35,7 +38,8 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $path = $request->imageFile->store('public/images');
+        return $path;
     }
 
     /**

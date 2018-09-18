@@ -131,6 +131,8 @@ class PostController extends Controller
         $css = Cache::remember('css', 22*60, function() {
             return Storage::disk('public')->get('/css/app.css');
         });
+        Cache::flush();
+        ResponseCache::clear();
         return view('posts.edit-vue', compact('post', 'css'));
     }
 

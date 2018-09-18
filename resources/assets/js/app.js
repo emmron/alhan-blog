@@ -22,11 +22,33 @@ const app = new Vue({
     el: '#app',
     data: {
         post: post,
-        isEditor: isEditor
+        isEditor: isEditor,
+        imageFile: ''
     },
     methods: {
-        updatePreview() {
-            // localStorage.setItem('post_' + this.post.id, JSON.stringify(this.post));
+        getImage(event) {
+            console.log(event); 
+            this.imageFile = event.target.files[0];
+        },
+        uploadImage() {
+            var $this = this;
+            if ($this.imageFile) {
+                var formData = new FormData();
+                formData.append('imageFile', this.imageFile);
+                axios.post('/posts/' + $this.post.id + '/images',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data' 
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(e => {
+                    console.log(e.response)
+                })
+            }
         }
     },
     mounted() {

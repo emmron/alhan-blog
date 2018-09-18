@@ -18,6 +18,9 @@
             <style>{!! $css !!}</style>
         @endisset
         <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon">
+        @if (Auth::check())
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+        @endif
     </head>
     <body>
         <div id="app" class="container">
