@@ -23,7 +23,8 @@ const app = new Vue({
     data: {
         post: post,
         isEditor: isEditor,
-        imageFile: ''
+        imageFile: '',
+        altText: ''
     },
     methods: {
         getImage(event) {
@@ -35,6 +36,7 @@ const app = new Vue({
             if ($this.imageFile) {
                 var formData = new FormData();
                 formData.append('imageFile', this.imageFile);
+                formData.append('altText', this.altText);
                 axios.post('/posts/' + $this.post.id + '/images',
                 formData,
                 {

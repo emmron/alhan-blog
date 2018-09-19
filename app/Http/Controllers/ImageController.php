@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use InterventionImage;
 
 class ImageController extends Controller
 {
@@ -36,9 +37,56 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post)
     {
-        $path = $request->imageFile->store('public/images');
+        // $path = $request->imageFile->store('public/images');
+        // $image = new File($request->imageFile);
+
+        $extension = $request->imageFile->getClientOriginalExtension();
+        $filename = str_slug($request->altText,'-') . '_' . $post . '_' . time();
+        $tempPath = Storage::putFileAs('public/images/temp', new File($request->imageFile), $filename . $extension);
+
+        return $tempPath;
+
+        // $images = [
+        //     'sm_jpg' => '',
+        //     'sm_wp' => '',
+        //     'md_jpg' => '',
+        //     'md_wp' => '',
+        //     'lg_jpg' => '',
+        //     'lg_wp' => '',
+        // ];
+
+        // foreach($images as $image) {
+        //     $imgInstance = InterventionImage::make($path);
+        //     $imgInstance->resize(null, 640, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //         $constraint->upsize();
+        //     });
+        //     $imgInstance->save('public/images', 60);
+        // }
+
+        // $img = InterventionImage::make($path)
+        
+        // resize(null, 640, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //         $constraint->upsize();
+        //     });
+
+        // $img = Image::make('public/foo.jpg')
+        // $img->resize(null, 400, function ($constraint) {
+        //     $constraint->aspectRatio();
+        //     $constraint->upsize();
+        // });
+        // save file as jpg with medium quality
+        // $img->save('public/bar.jpg', 60);
+
+        // encode png image as jpg
+        // $jpg = (string) Image::make('public/foo.png')->encode('jpg', 75);
+
+        // encode image as data-url
+        // $data = (string) Image::make('public/bar.png')->encode('data-url');
+
         return $path;
     }
 

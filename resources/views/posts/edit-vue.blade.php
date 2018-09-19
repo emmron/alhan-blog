@@ -86,6 +86,9 @@
                 <input type="file" name="imageFile" @change="getImage($event)">
             </div>
             <div>
+            <input type="text" name="alt" v-model="altText">
+            </div>
+            <div>
                 <a href="javascript:void(0)" type="submit" @click="uploadImage">Upload</a>
             </div>
         </div>
