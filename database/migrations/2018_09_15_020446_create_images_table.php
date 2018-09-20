@@ -15,10 +15,10 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('small');
-            $table->string('medium');
-            $table->string('large');
-            $table->string('alt');
+            $table->string('sm');
+            $table->string('md');
+            $table->string('lg');
+            $table->string('alt_text');
             $table->timestamps();
             $table->unsignedInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');

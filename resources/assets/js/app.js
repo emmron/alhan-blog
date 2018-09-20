@@ -24,7 +24,8 @@ const app = new Vue({
         post: post,
         isEditor: isEditor,
         imageFile: '',
-        altText: ''
+        altText: '',
+        images: post.images
     },
     methods: {
         getImage(event) {
@@ -45,7 +46,7 @@ const app = new Vue({
                     }
                 })
                 .then(response => {
-                    console.log(response)
+                    //@TODO: add image to list of images
                 })
                 .catch(e => {
                     console.log(e.response)
@@ -74,6 +75,7 @@ const app = new Vue({
             document.onkeypress = _.debounce(function() {
                 localStorage.setItem('post_' + $this.post.id, JSON.stringify($this.post));
             },500)
+            // this.images = images;
         }
         
         

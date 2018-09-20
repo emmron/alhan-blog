@@ -92,6 +92,8 @@
                 <a href="javascript:void(0)" type="submit" @click="uploadImage">Upload</a>
             </div>
         </div>
+        
+        
         @foreach($post->images as $image)
             <div class="mt-3" style="display: flex;">
                 

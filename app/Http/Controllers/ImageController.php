@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use InterventionImage;
+use Buglinjo\LaravelWebp\Facades\LaravelWebp;
 
 class ImageController extends Controller
 {
@@ -39,55 +40,57 @@ class ImageController extends Controller
      */
     public function store(Request $request, $post)
     {
-        // $path = $request->imageFile->store('public/images');
-        // $image = new File($request->imageFile);
 
-        $extension = $request->imageFile->getClientOriginalExtension();
-        $filename = str_slug($request->altText,'-') . '_' . $post . '_' . time();
-        $tempPath = Storage::putFileAs('public/images/temp', new File($request->imageFile), $filename . $extension);
+        $tempLocation = 'public/images/temp';
+        $uploadedFile = new File($request->imageFile);
+        $fileName = str_slug($request->altText,'-') . '_' . $post . '_' . time();
+        $extension = strtolower($request->imageFile->getClientOriginalExtension());
+        $tempFilePath = Storage::putFileAs($tempLocation, $uploadedFile, $fileName . '.' . $extension);
 
-        return $tempPath;
-
-        // $images = [
-        //     'sm_jpg' => '',
-        //     'sm_wp' => '',
-        //     'md_jpg' => '',
-        //     'md_wp' => '',
-        //     'lg_jpg' => '',
-        //     'lg_wp' => '',
-        // ];
-
-        // foreach($images as $image) {
-        //     $imgInstance = InterventionImage::make($path);
-        //     $imgInstance->resize(null, 640, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //         $constraint->upsize();
-        //     });
-        //     $imgInstance->save('public/images', 60);
-        // }
-
-        // $img = InterventionImage::make($path)
+        // return $tempFilePath;
         
-        // resize(null, 640, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //         $constraint->upsize();
-        //     });
+        $imagesConfig = [
+            'sizes' => [
+                'sm' => 320,
+                'md' => 480,
+                'lg' => 640
+            ],
+            'formats' => [
+                'jpg',
+                'webp'
+            ]
+        ];
 
-        // $img = Image::make('public/foo.jpg')
-        // $img->resize(null, 400, function ($constraint) {
-        //     $constraint->aspectRatio();
-        //     $constraint->upsize();
-        // });
-        // save file as jpg with medium quality
-        // $img->save('public/bar.jpg', 60);
+        $postImageFormats = [];
+        $tempFilePath = storage_path('app/' . $tempFilePath);
+        $finalLocation = storage_path('app/public/images/posts');
+        $relativePath = 'public/images/posts/';
 
-        // encode png image as jpg
-        // $jpg = (string) Image::make('public/foo.png')->encode('jpg', 75);
+        foreach ($imagesConfig['sizes'] as $sizeName => $width) {
+            unset($fileSize);
+            $fileSize = InterventionImage::make($tempFilePath)->resize(null, $width, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            foreach ($imagesConfig['formats'] as $format) {
+                // "message": "Webp format is not supported by PHP installation."
+                if ($format == 'jpg') { 
+                    $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
+                    $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
+                    $postImageFormats[$sizeName] = Storage::url($relativePath . $fileFormat->basename);
+                }
+            }
+        }
 
-        // encode image as data-url
-        // $data = (string) Image::make('public/bar.png')->encode('data-url');
+        $image = Image::create([
+            'alt_text' => $request->altText,
+            'sm' => $postImageFormats['sm'],
+            'md' => $postImageFormats['md'],
+            'lg' => $postImageFormats['lg'],
+            'post_id' => $post
+        ]);
 
-        return $path;
+        return $image;
     }
 
     /**
