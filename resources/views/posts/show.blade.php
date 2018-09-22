@@ -5,7 +5,7 @@
 @section('description')@php echo explode('. ', $post->body)[0] . '.'; @endphp@endsection  
 
 @section('admin-tools')
-    <a id="editLink" href="/posts/{{ $post->id }}/edit">Edit</a>
+    <a id="editLink" target="_blank" href="/posts/{{ $post->id }}/edit">Edit</a>
     @if (! $post->published)
         <p style="background:yellow; padding: 10px;">DRAFT</p>
     @endif

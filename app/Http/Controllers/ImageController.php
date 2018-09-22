@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+use InterventionImage;
+use Buglinjo\LaravelWebp\Facades\LaravelWebp;
 
 class ImageController extends Controller
 {
@@ -33,9 +38,59 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post)
     {
-        //
+
+        $tempLocation = 'public/images/temp';
+        $uploadedFile = new File($request->imageFile);
+        $fileName = str_slug($request->altText,'-') . '_' . $post . '_' . time();
+        $extension = strtolower($request->imageFile->getClientOriginalExtension());
+        $tempFilePath = Storage::putFileAs($tempLocation, $uploadedFile, $fileName . '.' . $extension);
+
+        // return $tempFilePath;
+        
+        $imagesConfig = [
+            'sizes' => [
+                'sm' => 320,
+                'md' => 480,
+                'lg' => 640
+            ],
+            'formats' => [
+                'jpg',
+                'webp'
+            ]
+        ];
+
+        $postImageFormats = [];
+        $tempFilePath = storage_path('app/' . $tempFilePath);
+        $finalLocation = storage_path('app/public/images/posts');
+        $relativePath = 'public/images/posts/';
+
+        foreach ($imagesConfig['sizes'] as $sizeName => $width) {
+            unset($fileSize);
+            $fileSize = InterventionImage::make($tempFilePath)->resize(null, $width, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            foreach ($imagesConfig['formats'] as $format) {
+                // "message": "Webp format is not supported by PHP installation."
+                if ($format == 'jpg') { 
+                    $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
+                    $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
+                    $postImageFormats[$sizeName] = Storage::url($relativePath . $fileFormat->basename);
+                }
+            }
+        }
+
+        $image = Image::create([
+            'alt_text' => $request->altText,
+            'sm' => $postImageFormats['sm'],
+            'md' => $postImageFormats['md'],
+            'lg' => $postImageFormats['lg'],
+            'post_id' => $post
+        ]);
+
+        return $image;
     }
 
     /**
