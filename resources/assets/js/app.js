@@ -16,10 +16,11 @@ Vue.config.devtools = true;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('images', require('./components/Images.vue'));
 
 const app = new Vue({
     el: '#app',
+    // components: [images],
     data: {
         post: post,
         isEditor: isEditor,
@@ -46,7 +47,7 @@ const app = new Vue({
                     }
                 })
                 .then(response => {
-                    //@TODO: add image to list of images
+                    $this.images.push(response.data)
                 })
                 .catch(e => {
                     console.log(e.response)
