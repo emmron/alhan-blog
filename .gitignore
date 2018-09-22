@@ -3,7 +3,6 @@
 /public/storage
 /storage/*.key
 /storage/public/images
-/storage/public/images
 /vendor
 /.idea
 /.vscode

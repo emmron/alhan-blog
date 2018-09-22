@@ -22,18 +22,11 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        // if(app()->env == 'local') { 
-        //     Cache::flush(); 
-        //     ResponseCache::clear();
-        // }
         $posts = Cache::remember('posts-published', 22*60, function() {
             return Post::where('published', 1)->get()->sortByDesc('created_at');
         });
-        $css = Cache::remember('css', 22*60, function() {
-            return Storage::disk('public')->get('/css/app.css');
-        });
         $amp = $request->query('amp') > 0 ? true : null;
-        return view('home', compact('posts', 'css', 'amp'));
+        return view('home', compact('posts', 'amp'));
     }
 
     /**
@@ -44,10 +37,7 @@ class PostController extends Controller
     public function drafts()
     {
         $posts = Post::where('published', 0)->get()->sortByDesc('created_at');
-        $css = Cache::remember('css', 22*60, function() {
-            return Storage::disk('public')->get('/css/app.css');
-        });
-        return view('home', compact('posts', 'css'));
+        return view('home', compact('posts'));
     }
 
     /**
@@ -57,10 +47,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $css = Cache::remember('css', 22*60, function() {
-            return Storage::disk('public')->get('/css/app.css');
-        });
-        return view('posts.create', compact('css'));
+        return view('posts.create');
     }
 
     /**
@@ -87,10 +74,6 @@ class PostController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        // if(app()->env == 'local') { 
-        //     Cache::flush();
-        //     ResponseCache::clear();
-        // }
         // Post
         $cachePostKey = 'post_' . $slug;
         if (Cache::has($cachePostKey)) {
@@ -107,15 +90,9 @@ class PostController extends Controller
             abort(404);
         }
 
-        // Inline CSS
-        // $css = Storage::disk('public')->get('/css/app.css');
-        $css = Cache::remember('css', 22*60, function() {
-            return Storage::disk('public')->get('/css/app.css');
-        });
-
         $amp = $request->query('amp') > 0 ? true : null;
         return response()
-                ->view('posts.show', compact('post', 'css', 'amp'))
+                ->view('posts.show', compact('post', 'amp'))
                 ->header('Cache-Control', 'cache, public, max-age=604800')
                 ->header('Last-Modified', $post->last_modified);
     }
@@ -128,12 +105,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $css = Cache::remember('css', 22*60, function() {
-            return Storage::disk('public')->get('/css/app.css');
-        });
         Cache::flush();
         ResponseCache::clear();
-        return view('posts.edit-vue', compact('post', 'css'));
+        return view('posts.edit-vue', compact('post'));
     }
 
     /**
