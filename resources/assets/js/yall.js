@@ -194,5 +194,5 @@ var yall = function(userOptions) {
   }
 };
 yall();
-
+window.yall = yall;
 });
