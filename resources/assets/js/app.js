@@ -26,7 +26,7 @@ const app = new Vue({
         isEditor: isEditor,
         imageFile: '',
         altText: '',
-        images: post.images
+        images: postImages
     },
     methods: {
         getImage(event) {
@@ -73,9 +73,9 @@ const app = new Vue({
             }
         }
         else {
-            document.onkeypress = _.debounce(function() {
-                localStorage.setItem('post_' + $this.post.id, JSON.stringify($this.post));
-            },500)
+            // document.onkeypress = _.debounce(function() {
+            //     localStorage.setItem('post_' + $this.post.id, JSON.stringify($this.post));
+            // },500)
             // this.images = images;
         }
         
