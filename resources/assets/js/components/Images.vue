@@ -6,27 +6,27 @@
                     <source 
                         :media="'(min-width:' + 480 + 'px)'" 
                         type="image/webp"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_lg.webp'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_lg.webp'">
                     <source 
                         :media="'(max-width:' + 480 + 'px)'" 
                         type="image/webp"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_md.webp'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_md.webp'">
                     <source 
                         :media="'(max-width:' + 380 + 'px)'"
                         type="image/webp"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_sm.webp'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_sm.webp'">
                     <source 
                         :media="'(min-width:' + 480 + 'px)'" 
                         type="image/jpeg"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_lg.jpg'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_lg.jpg'">
                     <source 
                         :media="'(max-width:' + 480 + 'px)'" 
                         type="image/jpeg"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_md.jpg'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_md.jpg'">
                     <source 
                         :media="'(max-width:' + 380 + 'px)'"
                         type="image/jpeg"
-                        :data-srcset="'/images/posts/' + image.post_id + '/' + image.file_basename + '_sm.jpg'">
+                        :data-srcset="'/storage/images/posts/' + image.post_id + '/' + image.file_basename + '_sm.jpg'">
                     <img 
                         class="lazy"
                         style="width:100%;height:300px;"
