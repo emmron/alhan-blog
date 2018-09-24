@@ -4,15 +4,35 @@
             <div class="post-image mt-3 mb-3" :data-id="'image_' + image.id">
                 <picture>
                     <source 
-                        :media="'(max-width:' + 320 + 'px)'" 
-                        :srcset="image.sm">
+                        :media="'(min-width:' + 480 + 'px)'" 
+                        type="image/webp"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_lg.webp'">
                     <source 
                         :media="'(max-width:' + 480 + 'px)'" 
-                        :srcset="image.md">
+                        type="image/webp"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_md.webp'">
+                    <source 
+                        :media="'(max-width:' + 380 + 'px)'"
+                        type="image/webp"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_sm.webp'">
+                    <source 
+                        :media="'(min-width:' + 480 + 'px)'" 
+                        type="image/jpeg"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_lg.jpg'">
+                    <source 
+                        :media="'(max-width:' + 480 + 'px)'" 
+                        type="image/jpeg"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_md.jpg'">
+                    <source 
+                        :media="'(max-width:' + 380 + 'px)'"
+                        type="image/jpeg"
+                        :data-srcset="'/images/posts/' + image.file_basename + '_sm.jpg'">
                     <img 
                         class="lazy"
+                        style="width:100%;height:300px;"
                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+R8AAjcBmvywMWoAAAAASUVORK5CYII="  
-                        :data-src="image.lg" 
+                        data-style="" 
+                        data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+R8AAjcBmvywMWoAAAAASUVORK5CYII="
                         :alt="image.alt_text">
                 </picture>
                 <div class="small" v-html="image.alt_text"></div>
@@ -45,7 +65,7 @@
         methods: {
             showEmbedHTML() {
                 document.querySelectorAll('.post-image').forEach(element => {
-                    document.querySelector('textarea[data-id="' + element.dataset.id + '"]').innerHTML = element.innerHTML;
+                    document.querySelector('textarea[data-id="' + element.dataset.id + '"]').innerHTML = element.outerHTML;
                 });
             }
         },

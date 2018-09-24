@@ -51,7 +51,7 @@ class ImageController extends Controller
         
         $imagesConfig = [
             'sizes' => [
-                'sm' => 320,
+                'sm' => 380,
                 'md' => 480,
                 'lg' => 640
             ],
@@ -64,7 +64,7 @@ class ImageController extends Controller
         $postImageFormats = [];
         $tempFilePath = storage_path('app/' . $tempFilePath);
         $finalLocation = storage_path('app/public/images/posts');
-        $relativePath = 'public/images/posts/';
+        $relativePath = '/images/posts/';
 
         foreach ($imagesConfig['sizes'] as $sizeName => $width) {
             unset($fileSize);
@@ -73,20 +73,22 @@ class ImageController extends Controller
                 $constraint->upsize();
             });
             foreach ($imagesConfig['formats'] as $format) {
-                // "message": "Webp format is not supported by PHP installation."
                 if ($format == 'jpg') { 
                     $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
                     $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
-                    $postImageFormats[$sizeName] = Storage::url($relativePath . $fileFormat->basename);
+                    $postImageFormats[$sizeName .'_' . $format] = $relativePath . $fileFormat->basename;
+                }
+                if ($format == 'webp') { 
+                    $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
+                    $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
+                    $postImageFormats[$sizeName .'_' . $format] = $relativePath . $fileFormat->basename;
                 }
             }
         }
 
         $image = Image::create([
             'alt_text' => $request->altText,
-            'sm' => $postImageFormats['sm'],
-            'md' => $postImageFormats['md'],
-            'lg' => $postImageFormats['lg'],
+            'file_basename' => $fileName,
             'post_id' => $post
         ]);
 

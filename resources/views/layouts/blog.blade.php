@@ -49,6 +49,7 @@
             @if (Auth::check())
                 <script>
                     var post = false;
+                    var postImages = false;
                     var isEditor = false;
                 </script>
                 @yield('footer-scripts')
