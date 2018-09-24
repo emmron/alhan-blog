@@ -43,8 +43,9 @@ const app = new Vue({
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data' 
-                    }
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                      }
                 })
                 .then(response => {
                     $this.images.push(response.data)
