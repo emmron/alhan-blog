@@ -16,17 +16,44 @@ Vue.config.devtools = true;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('images', require('./components/Images.vue'));
 
 const app = new Vue({
     el: '#app',
+    // components: [images],
     data: {
         post: post,
-        isEditor: isEditor
+        isEditor: isEditor,
+        imageFile: '',
+        altText: '',
+        images: postImages
     },
     methods: {
-        updatePreview() {
-            // localStorage.setItem('post_' + this.post.id, JSON.stringify(this.post));
+        getImage(event) {
+            console.log(event); 
+            this.imageFile = event.target.files[0];
+        },
+        uploadImage() {
+            var $this = this;
+            if ($this.imageFile) {
+                var formData = new FormData();
+                formData.append('imageFile', this.imageFile);
+                formData.append('altText', this.altText);
+                axios.post('/posts/' + $this.post.id + '/images',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                      }
+                })
+                .then(response => {
+                    $this.images.push(response.data)
+                })
+                .catch(e => {
+                    console.log(e.response)
+                })
+            }
         }
     },
     mounted() {
@@ -47,9 +74,10 @@ const app = new Vue({
             }
         }
         else {
-            document.onkeypress = _.debounce(function() {
-                localStorage.setItem('post_' + $this.post.id, JSON.stringify($this.post));
-            },500)
+            // document.onkeypress = _.debounce(function() {
+            //     localStorage.setItem('post_' + $this.post.id, JSON.stringify($this.post));
+            // },500)
+            // this.images = images;
         }
         
         

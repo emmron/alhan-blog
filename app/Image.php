@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     protected $fillable = [
-        'alt', 'small', 'medium', 'large'
+        'alt_text', 'file_basename', 'post_id'
     ];
 }

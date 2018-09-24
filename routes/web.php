@@ -24,3 +24,7 @@ Route::post('posts/{post}/edit', 'PostController@update')
 Route::get('posts/{post}/destroy', 'PostController@destroy')
     ->where('post', '[0-9]+')
     ->middleware('auth');
+
+Route::post('posts/{post}/images', 'ImageController@store')
+    ->where('post', '[0-9]+')
+    ->middleware('auth');

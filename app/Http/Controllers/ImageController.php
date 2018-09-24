@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+use InterventionImage;
+use Buglinjo\LaravelWebp\Facades\LaravelWebp;
 
 class ImageController extends Controller
 {
@@ -33,9 +38,49 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $post)
     {
-        //
+
+        $storageDirectory = 'public/images/posts/' . $post;
+        $relativeStorageDirectory = storage_path('app/' . $storageDirectory);
+        $relativePublicPath = '/images/posts/' . $post;
+        $uploadedFile = new File($request->imageFile);
+        $fileName = str_slug($request->altText,'-') . '_' . $post . '_' . time();
+        $extension = strtolower($request->imageFile->getClientOriginalExtension());
+        $originalFileName = $fileName . '.' . $extension;
+        Storage::putFileAs($storageDirectory, $uploadedFile, $originalFileName);
+
+        $imagesConfig = [
+            'sizes' => [
+                'sm' => 380,
+                'md' => 480,
+                'lg' => 640
+            ],
+            'formats' => [
+                'jpg',
+                'webp'
+            ]
+        ];
+
+        foreach ($imagesConfig['sizes'] as $sizeName => $width) {
+            unset($resizedFile);
+            $resizedFile = InterventionImage::make($relativeStorageDirectory . '/' . $originalFileName)->resize(null, $width, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            foreach ($imagesConfig['formats'] as $format) {
+                $fileVersionName = $fileName .  '_' . $sizeName . '.' . $format;
+                $reformattedFile = $resizedFile->encode($format, 60)->save($relativeStorageDirectory . '/' . $fileVersionName);
+            }
+        }
+
+        $image = Image::create([
+            'alt_text' => $request->altText,
+            'file_basename' => $fileName,
+            'post_id' => $post
+        ]);
+
+        return $image;
     }
 
     /**
