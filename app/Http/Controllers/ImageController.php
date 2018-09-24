@@ -41,14 +41,15 @@ class ImageController extends Controller
     public function store(Request $request, $post)
     {
 
-        $tempLocation = 'public/images/temp';
+        $storageDirectory = 'public/images/posts/' . $post;
+        $relativeStorageDirectory = storage_path('app/' . $storageDirectory);
+        $relativePublicPath = '/images/posts/' . $post;
         $uploadedFile = new File($request->imageFile);
         $fileName = str_slug($request->altText,'-') . '_' . $post . '_' . time();
         $extension = strtolower($request->imageFile->getClientOriginalExtension());
-        $tempFilePath = Storage::putFileAs($tempLocation, $uploadedFile, $fileName . '.' . $extension);
+        $originalFileName = $fileName . '.' . $extension;
+        Storage::putFileAs($storageDirectory, $uploadedFile, $originalFileName);
 
-        // return $tempFilePath;
-        
         $imagesConfig = [
             'sizes' => [
                 'sm' => 380,
@@ -61,28 +62,15 @@ class ImageController extends Controller
             ]
         ];
 
-        $postImageFormats = [];
-        $tempFilePath = storage_path('app/' . $tempFilePath);
-        $finalLocation = storage_path('app/public/images/posts');
-        $relativePath = '/images/posts/';
-
         foreach ($imagesConfig['sizes'] as $sizeName => $width) {
-            unset($fileSize);
-            $fileSize = InterventionImage::make($tempFilePath)->resize(null, $width, function ($constraint) {
+            unset($resizedFile);
+            $resizedFile = InterventionImage::make($relativeStorageDirectory . '/' . $originalFileName)->resize(null, $width, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             foreach ($imagesConfig['formats'] as $format) {
-                if ($format == 'jpg') { 
-                    $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
-                    $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
-                    $postImageFormats[$sizeName .'_' . $format] = $relativePath . $fileFormat->basename;
-                }
-                if ($format == 'webp') { 
-                    $saveLocation = $finalLocation . '/' . $fileName .  '_' . $sizeName . '.' . $format;
-                    $fileFormat = $fileSize->encode($format, 60)->save($saveLocation);
-                    $postImageFormats[$sizeName .'_' . $format] = $relativePath . $fileFormat->basename;
-                }
+                $fileVersionName = $fileName .  '_' . $sizeName . '.' . $format;
+                $reformattedFile = $resizedFile->encode($format, 60)->save($relativeStorageDirectory . '/' . $fileVersionName);
             }
         }
 
