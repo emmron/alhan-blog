@@ -13,25 +13,25 @@
 
 @if (! Auth::check())
     @section('content')
-        <div class="content framed">
-            <h1 class="mb-4">{{ $post->title }}</h1>
-            <div class="small mb-4"> 
+        <div class="container p-5 sm:p-10 md:p-16 lg:max-w-lg border border-solid border-solid border-grey-light bg-white">
+            <h1 class="tracking-tight text-5xl mb-4">{{ $post->title }}</h1>
+            <div class="mb-4 text-xs"> 
             Posted <strong>{{ date('M d, Y', strtotime($post->created_at)) }}</strong>
             by <a href="#">Alhan Keser</a>
             @if($post->updated_at != $post->created_at) 
                 and updated <strong>{{ date('M d, Y', strtotime($post->updated_at)) }}</strong>
             @endif
             </div>
-            <div>{!! html_entity_decode($post->body) !!}</div>
+            <div class="text-lg leading-normal">{!! html_entity_decode($post->body) !!}</div>
         </div>
     @endsection
 @endif
             
 
 @section('content-editable')
-    <div class="content framed editor-preview">
-        <h1 class="mb-4">@{{ post.title }}</h1>
-        <div class="small mb-4"> 
+    <div class="">
+        <h1 class="">@{{ post.title }}</h1>
+        <div class=""> 
         Posted <strong>{{ date('M d, Y', strtotime($post->created_at)) }}</strong>
         by <a href="#">Alhan Keser</a>
         @if($post->updated_at != $post->created_at) 

@@ -15,20 +15,21 @@
             <style amp-custom>@php echo Storage::disk('public')->get('/css/app.css'); @endphp;</style>
         @else 
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style>@php echo Storage::disk('public')->get('/css/app.css'); @endphp;</style>
+            <!-- <style id="default">@php echo Storage::disk('public')->get('/css/app.css'); @endphp;</style> -->
+            <style id="tw">@php echo Storage::disk('public')->get('/css/tailwind.css'); @endphp;</style>
         @endisset
         <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon">
         @if (Auth::check())
             <meta name="csrf-token" content="{{ csrf_token() }}">
         @endif
     </head>
-    <body>
-        <div id="app" class="container">
-            <div class="pad-5">
-                <div class="h3"><a href="/">HOME</a></div>
+    <body class="font-sans bg-grey-lightest">
+        <div id="app">
+            <div class="container py-12 lg:max-w-lg">
+                <div class=""><a href="/">HOME</a></div>
             </div>
             @if (Auth::check())
-            <div class="mb-2">
+            <div class="">
                 @yield('admin-tools')
             </div>
             @endif
@@ -39,7 +40,7 @@
 
             @yield('content')
             
-            <div class="pad-5">
+            <div class="">
                     <a href="/privacy">Privacy</a>
             </div>
         </div>
